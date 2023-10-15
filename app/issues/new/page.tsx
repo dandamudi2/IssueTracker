@@ -25,6 +25,19 @@ const { register,control,handleSubmit,formState:{ errors}} = useForm<IssueForm>(
 }); 
 
 
+const onSubmit = handleSubmit(async (data)=>{
+  try {
+   setisSubmitting(true);
+    await  axios.post('/api/issues',data)
+    router.push('/issues')
+   
+  } catch (error) {
+   setError('An unexpected error occured!')
+  }
+
+})
+  
+
 const [error,setError] = useState('');
 
 const [isSubmitting,setisSubmitting] = useState(false);
@@ -37,19 +50,7 @@ const [isSubmitting,setisSubmitting] = useState(false);
             {error}
         </Callout.Text>
       </Callout.Root>}
-    <form onSubmit={handleSubmit(async (data)=>{
-         try {
-          setisSubmitting(true);
-           await  axios.post('/api/issues',data)
-           router.push('/issues')
-          
-         } catch (error) {
-          setError('An unexpected error occured!')
-         }
-
-    }
-         
-  )} 
+    <form onSubmit={onSubmit} 
     className='space-y-3'>
       <TextField.Root>
       <TextField.Input placeholder="title" {...register('title')} /> 
