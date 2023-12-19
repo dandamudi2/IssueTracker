@@ -3,9 +3,32 @@ import prisma from "@/prisma/client";
 import IssueActions from "./issueActions";
 import { IssueStatusBadge, LInk } from "@/app/components";
 import Link from "../components/Link";
+import { Status } from "@prisma/client";
 
 const IssuesPage = async () => {
-  const issues = await prisma.issue.findFirst();
+  const issues2 = await prisma.issue.findMany();
+  console.log(issues2);
+
+  const issues = [
+    {
+      id: 1,
+      title: "srinivasu dandamudi",
+      status: Status.OPEN,
+      createdAt: new Date(),
+    },
+    {
+      id: 2,
+      title: "Sangeetha",
+      status: Status.IN_PROGRESS,
+      createdAt: new Date(),
+    },
+    {
+      id: 3,
+      title: "Badari",
+      status: Status.CLOSED,
+      createdAt: new Date(),
+    },
+  ];
 
   return (
     <div>
